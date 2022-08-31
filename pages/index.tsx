@@ -18,7 +18,7 @@ const Home: NextPage = () => {
       <main className=" flex w-full max-w-7xl grid grid-cols-[.3fr_.7fr] flex-1 flex-col items-start justify-center  text-center">
         <Sidebar />
         <div>
-          <div className="flex items-center justify-center align-start">
+          <div className="flex items-center justify-start pl-4 align-start">
             <Search />
             <Filter />
           </div>
