@@ -3,7 +3,7 @@ import create from "zustand";
 
 export type ChoiceKey = "liquidity" | "name"
  export type ChoiceValue = "ASC" | "DSC"
-type Choice = {
+export type Choice = {
     key: ChoiceKey,
     value: ChoiceValue 
 }

@@ -2,8 +2,8 @@ const Usdc = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="52"
-      height="52"
+      width="40"
+      height="40"
       viewBox="0 0 52 52"
       fill="none"
     >

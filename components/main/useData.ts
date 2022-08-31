@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import sampleSize from "lodash.samplesize"
 import internal from "stream";
-import useFilters from "./useFilters";
+import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import useFilters, { Choice } from "./useFilters";
+import usd from "../../public/images/usd.png"
+
 const data:TokenPair[] = [
   {
     id: 1,
@@ -63,7 +66,7 @@ const data:TokenPair[] = [
     volume: 11000,
     APY: "111%",
     rewards: 702000,
-  },{ 
+  },{  
       id: 10,
     name: "USDC/SOL",
     liquidity: 820010,
@@ -72,46 +75,53 @@ const data:TokenPair[] = [
     rewards: 704100,
   },
 ];
-export type TokenPair = {
-    id: Number,
-    name: String,
-    liquidity: Number,
-    volume: Number,
-    APY: String,
-    rewards: Number
+export type TokenPair = { 
+    id: number,
+    name: string,
+    liquidity: number,
+    volume: number,
+    APY: string,
+    rewards: number
 }
+
+
+export const sort = (rows: TokenPair[], choice: Choice) => {
+    const sortedRows = (rows as TokenPair[]).sort((a,b) => {
+        if (choice.key === "liquidity"){
+            if(a.liquidity > b.liquidity) {
+                return choice.value === "ASC" ? 1 : -1;
+            }
+
+            return a.liquidity < b.liquidity ? -1 : 1;
+        }
+        if(a.name > b.name) {
+            return choice.value === "ASC" ? 1 : -1;
+        }
+
+        return a.name < b.name ? -1 : 1;                
+    })
+    
+    return sortedRows
+}
+
+
 const useData = () => {
 const [rows,setRows] = useState<TokenPair[]|null>(null)
 const {choice} = useFilters()
 
+
+const query = useQuery(['feed'],async () => {
+    return rows?.map((elem) => {
+        return {...elem, liquidity: elem.liquidity + 5}
+    })
+}, {  enabled: !!rows && !!choice})
     useEffect(() => {
         const randomNum = Math.floor((Math.random() * 10) + 1)
 
         setRows(sampleSize(data, randomNum))
     }, [])
 
-    useEffect(() => {
-        if (!!rows){
-            const sortedRows = rows.sort((a,b) => {
-                if (choice.key === "liquidity"){
-                    if(a.liquidity > b.liquidity) {
-                        return choice.value === "ASC" ? 1 : -1;
-                    }
-
-                    return a.liquidity < b.liquidity ? -1 : 1;
-                }
-                if(a.name > b.name) {
-                    return choice.value === "ASC" ? 1 : -1;
-                }
-
-                return a.name < b.name ? -1 : 1;                
-            })
-
-            setRows(sortedRows)
-        }
-    }, [choice, rows])
-    
-    return rows;
+    return query;
 }
 
 
