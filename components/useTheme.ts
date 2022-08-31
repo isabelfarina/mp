@@ -44,7 +44,6 @@ const useTheme = () => {
         root.classList.add(active)
         localStorage.setItem("polo-theme", active)
     },[active])
-
-console.log(active)
+    return {active, setActive} 
 };
 export default useTheme;
