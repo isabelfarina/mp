@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import sampleSize from "lodash.samplesize"
 import internal from "stream";
+import useFilters from "./useFilters";
 const data:TokenPair[] = [
   {
     id: 1,
@@ -81,14 +82,37 @@ export type TokenPair = {
 }
 const useData = () => {
 const [rows,setRows] = useState<TokenPair[]|null>(null)
+const {choice} = useFilters()
 
-useEffect(() => {
+    useEffect(() => {
         const randomNum = Math.floor((Math.random() * 10) + 1)
 
         setRows(sampleSize(data, randomNum))
     }, [])
 
+    useEffect(() => {
+        if (!!rows){
+            const sortedRows = rows.sort((a,b) => {
+                if (choice.key === "liquidity"){
+                    if(a.liquidity > b.liquidity) {
+                        return choice.value === "ASC" ? 1 : -1;
+                    }
+
+                    return a.liquidity < b.liquidity ? -1 : 1;
+                }
+                if(a.name > b.name) {
+                    return choice.value === "ASC" ? 1 : -1;
+                }
+
+                return a.name < b.name ? -1 : 1;                
+            })
+
+            setRows(sortedRows)
+        }
+    }, [choice, rows])
+    
     return rows;
 }
+
 
 export default useData;

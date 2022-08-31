@@ -14,7 +14,13 @@ const TokenPair = (props: TokenPair) => {
       <Disclosure>
         <div>
           <Disclosure.Button className="rounded-md flex w-full justify-between  px-6 py-4 bg-custom-200 dark:bg-background-800">
-            <span>{props.APY}</span>
+            <span>
+              <>
+                {" "}
+                <p>{props.name} </p>
+                {props.liquidity} {props.APY}
+              </>
+            </span>
             {isOpen ? (
               <RiArrowUpSFill className="fill-black dark:fill-white" />
             ) : (
@@ -26,7 +32,13 @@ const TokenPair = (props: TokenPair) => {
               static
               className="flex w-full justify-between  px-6 py-6"
             >
-              <div className="rounded-lg bg-red"> {props.APY}</div>
+              <div className="rounded-lg">
+                <>
+                  {" "}
+                  <p>{props.name} </p>
+                  {props.liquidity} {props.APY}
+                </>
+              </div>
             </Disclosure.Panel>
           )}
         </div>

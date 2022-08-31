@@ -1,6 +1,7 @@
 import { Menu } from "@headlessui/react";
 import useFilters, { ChoiceKey } from "./useFilters";
 import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
+import { Fragment } from "react";
 const Filter = () => {
   const { choice, setChoice } = useFilters();
   const sortOptions = [
@@ -22,8 +23,8 @@ const Filter = () => {
         </Menu.Button>
         <Menu.Items className="mt-2 w-48 rounded-md shadow-lg bg-custom-300 dark:bg-background-950  py-1 origin-top-right absolute text-center">
           {sortOptions.map((elem) => (
-            <>
-              <Menu.Item key={`sort-${elem.key}-asc`}>
+            <Fragment key={`sort-${elem.key}`}>
+              <Menu.Item>
                 {({ active }) => (
                   <button
                     onClick={() => setChoice({ key: elem.key, value: "ASC" })}
@@ -37,7 +38,7 @@ const Filter = () => {
                   </button>
                 )}
               </Menu.Item>{" "}
-              <Menu.Item key={`sort-${elem.key}-dsc`}>
+              <Menu.Item>
                 {({ active }) => (
                   <button
                     onClick={() => setChoice({ key: elem.key, value: "DSC" })}
@@ -50,7 +51,7 @@ const Filter = () => {
                   </button>
                 )}
               </Menu.Item>
-            </>
+            </Fragment>
           ))}
         </Menu.Items>
       </Menu>
