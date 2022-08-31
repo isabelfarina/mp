@@ -1,21 +1,27 @@
 import { Disclosure } from "@headlessui/react";
 import { TokenPair } from "./useData";
 import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
+import useDropdown from "./useDropdown";
 
 const TokenPair = (props: TokenPair) => {
+  const { selected, setSelected } = useDropdown();
+  const isOpen = selected === props.id;
   return (
-    <li className="rounded-md bg-custom-200 dark:bg-background-800 dark:text-background-50 text-background-950">
+    <li
+      onClick={() => setSelected(isOpen ? null : props.id)}
+      className="rounded-md bg-custom-200 dark:bg-background-800 dark:text-background-50 text-background-950"
+    >
       <Disclosure>
         <div>
           <Disclosure.Button className="rounded-md flex w-full justify-between  px-6 py-4 bg-custom-200 dark:bg-background-800">
             <span>{props.APY}</span>
-            {false ? (
+            {isOpen ? (
               <RiArrowUpSFill className="fill-black dark:fill-white" />
             ) : (
               <RiArrowDownSFill className="fill-black dark:fill-white" />
             )}
           </Disclosure.Button>{" "}
-          {false && (
+          {isOpen && (
             <Disclosure.Panel
               static
               className="flex w-full justify-between  px-6 py-6"
