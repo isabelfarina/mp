@@ -1,5 +1,3 @@
-import Magnify from "./Magnify";
-
 const Search = () => {
   return (
     <form className="justify-center align-center flex">

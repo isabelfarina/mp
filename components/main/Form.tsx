@@ -1,63 +1,60 @@
 import Feed from "./Feed";
 import useData from "./useData";
-import { useForm } from "react-hook-form";
-const FormData = [
-  {
-    id: 1,
-    balance: 21104059,
-    pool: 1142433,
-    marco: 17142847,
-    usdc: 1141140,
-    lp: "0.014%",
-    rewards: 26.43,
-  },
-];
-export type FormType = {
-  id: number;
-  balance: number;
-  pool: number;
-  marco: number;
-  usdc: number;
-  lp: string;
-  rewards: number;
-};
+import { useFormik } from "formik";
+import { number } from "yup";
+
 const Form = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const FormData: FormType[] = [
+    {
+      id: 1,
+      usdcBalance: 0,
+      poloBalance: 12002,
+      balance: 21104059,
+      pool: 1142433,
+      marco: 17142847,
+      usdc: 1141140,
+      lp: "0.014%",
+      rewards: 26.43,
+    },
+  ];
+  type FormType = {
+    id: number;
+    usdcBalance: number;
+    poloBalance: number;
+    balance: number;
+    pool: number;
+    marco: number;
+    usdc: number;
+    lp: string;
+    rewards: number;
+  };
+  const formik = useFormik({
+    initialValues: {
+      poloBalance: 0,
+      usdcBalance: 0,
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
   return (
     <div>
       {FormData.map((e) => (
-        <form key={`token-${e.id + 1}`}>
-          <h4 className="flex align-left justify-start ">Your Liquidity</h4>
-          <div className="flex flex-col">
-            <label className="text-xs flex justify-end mr-3">
-              Balance {e.balance}
-            </label>
-            <input
-              className="bg-custom-300 text-background-900 pl-4 rounded-md h-10 m-2"
-              type="number"
-              placeholder="USDC"
-              {...register("USDC", {})}
-            ></input>
-            <label className="text-xs  flex justify-end mr-3">
-              Balance {e.balance}
-            </label>
-            <input
-              className="bg-custom-300 text-background-900 pl-4  rounded-md h-10 m-2 "
-              type="number"
-              placeholder="MARCO"
-              {...register("MARCO", {})}
-            />
-            <input
-              type="checkbox"
-              placeholder="Checkbox"
-              {...register("Checkbox", { required: true })}
-            />
-          </div>
+        <form key={`token-${e.id}`} onSubmit={formik.handleSubmit}>
+          <input
+            type="number"
+            onChange={formik.handleChange}
+            value={formik.values.poloBalance}
+            id="poloBalance"
+            name="poloBalance"
+          />
+          <input
+            type="number"
+            onChange={formik.handleChange}
+            value={formik.values.poloBalance}
+            id="usdcBalance"
+            name="usdcBalance"
+          />
         </form>
       ))}
     </div>
