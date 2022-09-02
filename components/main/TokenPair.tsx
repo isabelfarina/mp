@@ -8,7 +8,7 @@ import Logo from "../Logo";
 import Image from "next/image";
 import Marco from "/public/images/Marco.png";
 import Usd from "/public/images/usd.png";
-import Form from "./Form";
+import Form from "../form/Form";
 const TokenPair = (props: TokenPair) => {
   const { selected, setSelected } = useDropdown();
   const isOpen = selected === props.id;

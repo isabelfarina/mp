@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Switch } from "@headlessui/react";
 import useTheme from "./useTheme";
-
+import toast, { Toaster } from "react-hot-toast";
 const ThemeToggle = () => {
   const { active, setActive } = useTheme();
   const isDark = active == "dark";
-
   return (
     <div>
       <Switch
