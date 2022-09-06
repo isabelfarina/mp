@@ -9,11 +9,22 @@ import Image from "next/image";
 import Marco from "/public/images/Marco.png";
 import Usd from "/public/images/usd.png";
 import Form from "../form/Form";
+import {
+  Card,
+  CardTypes,
+} from "../../modules/notification/components/Notification";
+import { toast } from "react-hot-toast";
+
+const myPromis = async () => {};
+
 const TokenPair = (props: TokenPair) => {
   const { selected, setSelected } = useDropdown();
   const isOpen = selected === props.id;
   return (
     <li className="rounded-md bg-custom-200 dark:bg-background-800 dark:text-background-50 text-background-950">
+      <button className="rounded-md flex w-full justify-between  px-6 py-4 bg-custom-200 dark:bg-background-800">
+        test
+      </button>
       <Disclosure>
         <div>
           <Disclosure.Button
